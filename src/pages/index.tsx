@@ -1,13 +1,31 @@
+import { useEffect, useState } from "react"
+import Login from "./Login"
+import { User } from "./types"
+
 
 export default function Home() {
-    const callBackEnd = async () => {
-        const response = await fetch("/api/hello")
-        const result = await response.json()
-        alert("name: " + result.name)
+    let userSession: string | null = null;
+    if (typeof window != 'undefined') {
+        userSession = window.sessionStorage.getItem("user")
     }
-    return (
-        <main className='bg-gray-800 h-screen w-screen text-white flex justify-center pt-3'>
-            <button onClick={() => callBackEnd()} className="bg-red-300 rounded-md p-2 h-fit">call backend</button>
-        </main >
-    )
+    const [user, setUser] = useState<User | undefined>(undefined)
+    useEffect(() => {
+
+        if (userSession != null) {
+            let userJson = JSON.parse(userSession)
+            setUser(userJson)
+        }
+    }, [])
+    const ChangeUser = (newUser: User) => {
+        setUser(newUser)
+        if (typeof window != 'undefined') {
+            window.sessionStorage.setItem("user", JSON.stringify(newUser))
+        }
+    }
+    if (user == undefined) {
+        return <Login ChangeUser={ChangeUser} />
+    }
+    else {
+        return <h1 className="text-center text-3xl bg-primary text-primary-content py-3">hola {user.nombre + " " + user.apellidoPaterno + " " + user.apellidoMaterno}</h1>
+    }
 }
