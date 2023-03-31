@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import Login from "./Login"
-import { User } from "./types"
+import Login from "../Login"
+import { Estudiante, Profesor } from "./types"
 
 
 export default function Home() {
@@ -8,24 +8,39 @@ export default function Home() {
     if (typeof window != 'undefined') {
         userSession = window.sessionStorage.getItem("user")
     }
-    const [user, setUser] = useState<User | undefined>(undefined)
+    const [user, setUser] = useState<Estudiante | Profesor | undefined>(undefined)
     useEffect(() => {
-
         if (userSession != null) {
             let userJson = JSON.parse(userSession)
             setUser(userJson)
         }
     }, [])
-    const ChangeUser = (newUser: User) => {
+    const ChangeUser = (newUser: Estudiante | Profesor | undefined) => {
         setUser(newUser)
         if (typeof window != 'undefined') {
-            window.sessionStorage.setItem("user", JSON.stringify(newUser))
+            if (!newUser) {
+                window.sessionStorage.removeItem("user")
+            }
+            else {
+
+                window.sessionStorage.setItem("user", JSON.stringify(newUser))
+            }
         }
     }
     if (user == undefined) {
         return <Login ChangeUser={ChangeUser} />
     }
     else {
-        return <h1 className="text-center text-3xl bg-primary text-primary-content py-3">hola {user.nombre + " " + user.apellidoPaterno + " " + user.apellidoMaterno}</h1>
+        if ("nomina" in user) {
+            return (<div>
+                <h1 className="bg-primary text-primary-content p-2 text-center text-xl"> hola {user.nombre} , pagina de profesor</h1>
+
+                <button className="btn" onClick={() => ChangeUser(undefined)}>cerrar sesion</button>
+            </div>)
+        }
+        else if ("matricula" in user) {
+
+        }
+
     }
 }

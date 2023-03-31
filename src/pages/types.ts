@@ -1,12 +1,19 @@
-export type UserLogin = {
-    email: string,
-    password: string,
+export interface UserLogin  {
+    correo: string,
+    clave: string,
 }
 
-export type User = {
+export interface Estudiante  {
     matricula: string,
-    email: string,
-    type: string,
+    correo: string,
+    nombre: string,
+    apellidoPaterno: string,
+    apellidoMaterno: string,
+}
+
+export interface Profesor  {
+    nomina: string,
+    correo: string,
     nombre: string,
     apellidoPaterno: string,
     apellidoMaterno: string,
