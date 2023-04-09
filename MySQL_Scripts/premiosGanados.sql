@@ -5,11 +5,11 @@ CREATE TABLE IF NOT EXISTS  PremiosGanados
 (
     NumReg			varchar(5),
     matricula		varchar(9),
-    PremioID		varchar(5),
+    ClavePremio		varchar(5),
     FechaGanado		date,
-    PRIMARY KEY (NumReg,matricula,PremioID),
+    PRIMARY KEY (NumReg,matricula,ClavePremio),
     FOREIGN KEY (matricula) references Alumno(matricula),
-    FOREIGN KEY (PremioID) references Premio(PremioID)
+    FOREIGN KEY (ClavePremio) references Premio(ClavePremio)
 );
 
 DESCRIBE PremiosGanados;
