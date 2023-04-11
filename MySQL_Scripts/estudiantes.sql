@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS Alumno(
     Nombre VARCHAR(50) NOT NULL,
     ApellidoPaterno VARCHAR(50) NOT NULL,
     ApellidoMaterno VARCHAR(50) NOT NULL,
-    Contraseña VARCHAR(100) NOT NULL,
+    Clave VARCHAR(100) NOT NULL,
     Correo VARCHAR(50) NOT NULL
 );
 DESCRIBE Alumno;

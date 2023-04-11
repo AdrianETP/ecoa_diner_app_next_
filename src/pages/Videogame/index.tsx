@@ -30,7 +30,7 @@ function UnityGame() {
             <div className="bg-gray-500 flex h-[95vh] overflow-hidden items-center justify-center">
                 <iframe className='m-0'
                     title="Unity Game"
-                    src={"/WEB/index.html?matricula=" + JSON.stringify(user)}
+                    src={"/WEBgame/index.html?matricula=" + JSON.stringify(user)}
                     width="100%"
                     height="650"
                 />
