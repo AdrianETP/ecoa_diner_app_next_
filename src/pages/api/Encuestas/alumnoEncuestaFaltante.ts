@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+
 import { EncuestaAlumno } from '../../../types'
 import { createPool, Pool, PoolOptions } from 'mysql2/promise'
 import { config } from '../conectionData'

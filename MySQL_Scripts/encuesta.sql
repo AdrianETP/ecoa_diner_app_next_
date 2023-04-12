@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS  Encuesta
 (
     ClaveEncuesta			VARCHAR(5) NOT NULL,
     CRN             		VARCHAR(5) NOT NULL,
-	Periodo       			DATE NOT NULL,
+	Periodo       			VARCHAR(10) NOT NULL,
     Descripcion       		VARCHAR(100),
     FechaIni          		DATE NOT NULL,
     FechaLim				DATE NOT NULL,
