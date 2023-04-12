@@ -1,26 +1,30 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Estudiante, Profesor } from '../types'
-import { createPool, Pool, PoolOptions } from 'mysql2/promise'
+import { Estudiante, Profesor } from '../../types'
+import { createPool, Pool } from 'mysql2/promise'
 import { config } from './conectionData'
 
+interface Response {
+    msg: string,
+    user: Estudiante | Profesor | undefined
+}
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<Estudiante | Profesor | unknown>
+    res: NextApiResponse<Response>
 ) {
     try {
         const email = req.body.email
-        const clave = req.body.clave
-        const pool: Pool = await createPool(config)
+        const Clave = req.body.clave
+        const pool: Pool = createPool(config)
         let [rows]: any = await pool.query("select * from Alumno where correo=?", [email])
         if (rows[0]) {
-            if (clave == rows[0].clave) {
+            if (Clave == rows[0].Clave) {
                 console.log("success")
                 const finalUser: Estudiante = {
-                    correo: rows[0].correo,
-                    matricula: rows[0].matricula,
-                    nombre: rows[0].nombre,
-                    apellidoPaterno: rows[0].apellidoPaterno,
-                    apellidoMaterno: rows[0].apellidoMaterno,
+                    Correo: rows[0].Correo,
+                    Matricula: rows[0].Matricula,
+                    Nombre: rows[0].Nombre,
+                    ApellidoPaterno: rows[0].ApellidoPaterno,
+                    ApellidoMaterno: rows[0].ApellidoMaterno,
 
                 }
                 res.status(200).send({ msg: "se hizo el login con exito", user: finalUser })
@@ -31,16 +35,16 @@ export default async function handler(
             }
         }
         else {
-            [rows] = await pool.query("select * from Profesor where correo=?", [email])
+            [rows] = await pool.query("select * from Profesor where Correo=?", [email])
             if (rows[0]) {
-                if (clave == rows[0].clave) {
+                if (Clave == rows[0].Clave) {
                     console.log("success")
                     const finalUser: Profesor = {
-                        correo: rows[0].correo,
-                        nomina: rows[0].nomina,
-                        nombre: rows[0].nombre,
-                        apellidoPaterno: rows[0].apellidoPaterno,
-                        apellidoMaterno: rows[0].apellidoMaterno,
+                        Correo: rows[0].Correo,
+                        Nomina: rows[0].Nomina,
+                        Nombre: rows[0].Nombre,
+                        ApellidoPaterno: rows[0].apellidoPaterno,
+                        ApellidoMaterno: rows[0].apellidoMaterno,
                     }
                     res.status(200).send({ msg: "se hizo el login con exito", user: finalUser })
                 }
@@ -49,7 +53,7 @@ export default async function handler(
         }
     }
     catch (err: unknown) {
-        res.status(400).send(err)
+        res.status(400).send({ msg: "error: no existe ese usuario", user: undefined })
     }
 
 

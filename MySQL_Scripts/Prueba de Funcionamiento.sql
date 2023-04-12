@@ -1,48 +1,48 @@
 USE ecoa_diner;
 
 # Datos UDF
-DROP TABLE UDF;
+-- DROP TABLE UDF;
 INSERT INTO UDF VALUES("TC1005B","Software", "Bloque");
 INSERT INTO UDF VALUES("TC1001B","Fisica", "Bloque");
 SELECT * FROM UDF;
 
 # Datos Grupo
-DROP TABLE Grupo;
+-- DROP TABLE Grupo;
 INSERT INTO Grupo VALUES("404","TC1005B"),("404","TC1001B"),("101","TC1005B"),("101","TC1001B");
 SELECT * FROM Grupo;
 
 # Datos Profesor
-DROP TABLE Profesor;
+-- DROP TABLE Profesor;
 INSERT INTO Profesor VALUES("A00789123", "Profe2","Prueba2", "Prueba2", "12345", "profe2@gmail.com"),("A00123456", "Profe1","Prueba1", "Prueba1", "12345", "profe1@gmail.com");
 SELECT * FROM Profesor;
 
 # Datos Alumno
-DROP TABLE alumno;
-INSERT INTO Alumno VALUES("A00456789","Nombre1","Apellido1","Apellido2","Contraseña1","alumno1@gmail.com"),("A00223456","Nombre2","Apellido3","Apellido4","Contraseña2","alumno2@gmail.com");
+-- DROP TABLE alumno;
+INSERT INTO Alumno VALUES("A00456789","Nombre1","Apellido1","Apellido2","Contraseña1","alumno1@gmail.com"),("A00223456","Nombre2","Apellido3","Apellido4","Contraseña2","alumno2@gmail.com")("A01198211","Adrian Eduardo","Treviño","Peña","Adrian-005834","A01198211@tec.mx");
 SELECT * FROM Alumno;
 
 # Datos Premio
-DROP TABLE Premio;
+-- DROP TABLE Premio;
 INSERT INTO Premio VALUES("CPN1",1,"Coupon","Coupon de Chili's"),("GFTC1",1,"GiftCard","Giftcard de Amazon");
 SELECT * FROM Premio;
 
 # Datos pregunta
-DROP TABLE Pregunta;
+-- DROP TABLE Pregunta;
 INSERT INTO pregunta VALUES ("1P","RET","P1","El profe enseña",0),("2P","RET","P2","El profe ayuda",0),("3P","REC","P3","La Materia es util",0);
 SELECT * FROM Pregunta;
 
 # Datos Encuesta 
-DROP TABLE Encuesta;
+-- DROP TABLE Encuesta;
 INSERT INTO Encuesta VALUES ("E1","404",current_date(),"Ecoa 1", current_date(), current_date()),("E2","101",current_date(),"Ecoa 1", current_date(), current_date());
 SELECT * FROM Encuesta;
 
 # Datos AlumnosEnGrupo
-DROP TABLE AlumnoEnGrupo;
-INSERT INTO AlumnoEnGrupo VALUES ("404","A00456789","TC1005B","EJ23"),("404","A00223456","TC1001B","EJ23");
+-- DROP TABLE AlumnoEnGrupo;
+INSERT INTO AlumnoEnGrupo VALUES ("404","A00456789","TC1005B","EJ23"),("404","A00223456","TC1001B","EJ23")("101" , "A01198211","TC1005B", "EJ23");
 SELECT * FROM alumnoengrupo;
 
 # Datos ProfesorEnGrupo
-DROP TABLE ProfesorEnGrupo;
+-- DROP TABLE ProfesorEnGrupo;
 INSERT INTO profesorengrupo VALUES 
 ("404","A00789123","TC1005B","EJ23",50),
 ("404","A00123456","TC1005B","EJ23",50),
@@ -55,7 +55,7 @@ INSERT INTO profesorengrupo VALUES
 SELECT * FROM profesorengrupo;
 
 # Datos EncuestasPreguntas
-DROP TABLE encuestaspreguntas;
+-- DROP TABLE encuestaspreguntas;
 
 # Creacion de Encuestas con Preguntas
 INSERT INTO EncuestasPreguntas (claveEncuesta, clavePregunta)
@@ -70,7 +70,7 @@ JOIN Pregunta p ON ep.ClavePregunta = p.ClavePregunta
 ORDER BY e.claveEncuesta, p.clavePregunta;
 
 # Datos EncuestasAlumnos
-DROP TABLE encuestasalumnos;
+-- DROP TABLE encuestasalumnos;
 
 # Selecciona a alumnos que cursaron un curso en AlumnosEnGrupo
 INSERT INTO EncuestasAlumnos(ClaveEncuesta,Matricula,Contestada)
@@ -91,7 +91,7 @@ SELECT ea.ClaveEncuesta,ea.Matricula,e.Periodo,ea.Contestada FROM encuestasalumn
 JOIN encuesta e WHERE ea.ClaveEncuesta = e.ClaveEncuesta;
 
 # Datos respuestasAlumnos
-DROP TABLE RespuestasAlumnos;
+-- DROP TABLE RespuestasAlumnos;
 TRUNCATE TABLE RespuestasAlumnos;
 
 # Inserta respuesta dirigida a profesor o udf
@@ -101,7 +101,7 @@ VALUES ('3P', 'A00456789', 'E1', 'REC', NULL, 'Opción múltiple', 10, 'La Mater
 SELECT * FROM RespuestasAlumnos;
 
 # Datos respuestasFolios
-DROP TABLE RespuestasFolios;
+-- DROP TABLE RespuestasFolios;
 TRUNCATE TABLE RespuestasFolios;
 
 # Se Selecciona datos por matricula de RespuestasAlumnos y se le asigna un folio
