@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import Login from "../Login"
 import { Estudiante, Profesor } from "../types"
-import Student from "@/Student";
 
 
 export default function Home() {
