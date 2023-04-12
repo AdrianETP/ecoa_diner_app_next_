@@ -1,6 +1,7 @@
 USE ecoa_diner;
 
 # Datos UDF
+
 #DROP TABLE UDF;
 #TRUNCATE UDF;
 
@@ -13,17 +14,21 @@ SELECT * FROM UDF;
 #DROP TABLE Grupo;
 #TRUNCATE Grupo;
 
+
 INSERT INTO Grupo VALUES("404","TC1005B"),("404","TC1001B"),("101","TC1005B"),("101","TC1001B");
 SELECT * FROM Grupo;
 
 # Datos Profesor
+
 #DROP TABLE Profesor;
 #TRUNCATE Profesor;
+
 
 INSERT INTO Profesor VALUES("A00789123", "Profe2","Prueba2", "Prueba2", "12345", "profe2@gmail.com"),("A00123456", "Profe1","Prueba1", "Prueba1", "12345", "profe1@gmail.com");
 SELECT * FROM Profesor;
 
 # Datos Alumno
+
 #DROP TABLE Alumno;
 #TRUNCATE Alumno;
 
@@ -35,17 +40,21 @@ SELECT * FROM Alumno;
 #DROP TABLE Premio;
 #TRUNCATE Premio;
 
+
 INSERT INTO Premio VALUES("CPN1",1,"Coupon","Coupon de Chili's"),("GFTC1",1,"GiftCard","Giftcard de Amazon");
 SELECT * FROM Premio;
 
 # Datos pregunta
+
 #DROP TABLE Pregunta;
 #TRUNCATE Pregunta;
+
 
 INSERT INTO pregunta VALUES ("1P","RET","P1","El profe enseña",0),("2P","RET","P2","El profe ayuda",0),("3P","REC","P3","La Materia es util",0);
 SELECT * FROM Pregunta;
 
 # Datos Encuesta 
+
 #DROP TABLE Encuesta;
 #TRUNCATE Encuesta;
 
@@ -71,6 +80,7 @@ SELECT * FROM alumnoengrupo;
 #DROP TABLE ProfesorEnGrupo;
 #TRUNCATE ProfesorEnGrupo;
 
+
 INSERT INTO profesorengrupo VALUES 
 ("404","A00789123","TC1005B","EJ23",50),
 ("404","A00123456","TC1005B","EJ23",50),
@@ -83,8 +93,10 @@ INSERT INTO profesorengrupo VALUES
 SELECT * FROM profesorengrupo;
 
 # Datos EncuestasPreguntas
+
 DROP TABLE encuestaspreguntas;
 TRUNCATE encuestaspreguntas;
+
 
 # Creacion de Encuestas con Preguntas
 INSERT INTO EncuestasPreguntas (claveEncuesta, clavePregunta)
@@ -99,8 +111,10 @@ JOIN Pregunta p ON ep.ClavePregunta = p.ClavePregunta
 ORDER BY e.claveEncuesta, p.clavePregunta;
 
 # Datos EncuestasAlumnos
+
 DROP TABLE encuestasalumnos;
 TRUNCATE encuestasalumnos;
+
 
 # Selecciona a alumnos que cursaron un curso en AlumnosEnGrupo
 INSERT INTO EncuestasAlumnos(ClaveEncuesta,Matricula,Contestada)
@@ -121,7 +135,7 @@ SELECT ea.ClaveEncuesta,ea.Matricula,e.Periodo,ea.Contestada FROM encuestasalumn
 JOIN encuesta e WHERE ea.ClaveEncuesta = e.ClaveEncuesta;
 
 # Datos respuestasAlumnos
-DROP TABLE RespuestasAlumnos;
+-- DROP TABLE RespuestasAlumnos;
 TRUNCATE TABLE RespuestasAlumnos;
 
 # Inserta respuesta dirigida a profesor o udf
@@ -133,7 +147,7 @@ VALUES ('3P', 'A00456789', 'E1', 'REC', NULL, 'Opción múltiple', 10, 'La Mater
 SELECT * FROM RespuestasAlumnos;
 
 # Datos respuestasFolios
-DROP TABLE RespuestasFolios;
+-- DROP TABLE RespuestasFolios;
 TRUNCATE TABLE RespuestasFolios;
 
 # Se Selecciona datos por matricula de RespuestasAlumnos y se le asigna un folio

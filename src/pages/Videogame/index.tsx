@@ -11,14 +11,23 @@ function UnityGame() {
         document.body.appendChild(script);
         const queryparams = new URLSearchParams(window.location.search)
         const paramsUserString = queryparams.get("user")
+        console.log("params", paramsUserString)
         const sessionUserString = window.sessionStorage.getItem("user")
+        console.log("session", sessionUserString)
         if (paramsUserString != null && sessionUserString != null) {
             const sessionUserJson = JSON.parse(sessionUserString)
             const paramsUserJson = JSON.parse(paramsUserString)
-            if (JSON.stringify(sessionUserJson) == JSON.stringify(paramsUserJson) && "matricula" in paramsUserJson) {
+            if (JSON.stringify(sessionUserJson) == JSON.stringify(paramsUserJson) && "Matricula" in paramsUserJson) {
                 setUser(paramsUserJson)
-            }
+                console.log(paramsUserJson)
+            
+            }else{
+                    location.href = "/"
+                }
         }
+        else{
+                location.href = "/"
+            }
         return () => {
             document.body.removeChild(script);
         };
@@ -26,7 +35,7 @@ function UnityGame() {
 
     return (
         <div className='overflow-hidden'>
-            <Navbar nombre={user != null ? user.nombre + " " + user.apellidoPaterno + " " + user.apellidoMaterno : ""} />
+            <Navbar nombre={user != null ? user.Nombre + " " + user.ApellidoPaterno + " " + user.ApellidoMaterno : ""} />
             <div className="bg-gray-500 flex h-[95vh] overflow-hidden items-center justify-center">
                 <iframe className='m-0'
                     title="Unity Game"

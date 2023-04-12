@@ -1,20 +1,26 @@
-export interface UserLogin  {
+export interface UserLogin {
     correo: string,
     clave: string,
 }
 
-export interface Estudiante  {
-    matricula: string,
-    correo: string,
-    nombre: string,
-    apellidoPaterno: string,
-    apellidoMaterno: string,
+export interface Estudiante {
+    Matricula: string,
+    Correo: string,
+    Nombre: string,
+    ApellidoPaterno: string,
+    ApellidoMaterno: string,
 }
 
-export interface Profesor  {
-    nomina: string,
-    correo: string,
-    nombre: string,
-    apellidoPaterno: string,
-    apellidoMaterno: string,
+export interface Profesor {
+    Nomina: string,
+    Correo: string,
+    Nombre: string,
+    ApellidoPaterno: string,
+    ApellidoMaterno: string,
+}
+
+export interface EncuestaAlumno {
+    ClaveEncuesta: string,
+    Matricula: string,
+    Contestada: number,
 }

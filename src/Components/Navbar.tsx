@@ -8,7 +8,7 @@ function Navbar(props: Props) {
     const CerrarSession = () => {
         if (typeof window != "undefined") {
             window.sessionStorage.removeItem("user")
-            location.replace("/")
+            location.href = "/"
         }
     }
     return (

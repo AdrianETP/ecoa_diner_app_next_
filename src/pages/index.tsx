@@ -31,14 +31,14 @@ export default function Home() {
         return <Login ChangeUser={ChangeUser} />
     }
     else {
-        if ("nomina" in user) {
+        if ("Nomina" in user) {
             return (<div>
                 <h1 className="bg-primary text-primary-content p-2 text-center text-xl"> hola {user.nombre} , pagina de profesor</h1>
 
                 <button className="btn" onClick={() => ChangeUser(undefined)}>cerrar sesion</button>
             </div>)
         }
-        else if ("matricula" in user) {
+        else if ("Matricula" in user) {
             location.replace("/Student?user=" + JSON.stringify(user))
 
         }
