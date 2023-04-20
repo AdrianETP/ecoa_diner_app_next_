@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 
 function Student() {
     const [user, setUser] = useState<Estudiante | undefined>(undefined)
-    const [encuestasFaltantes, setEncuestasFaltantes] = useState<[EncuestaAlumno] | undefined >()
+    const [encuestasFaltantes, setEncuestasFaltantes] = useState<[EncuestaAlumno] | undefined>()
     const checkEncuestasFaltantes = async (matricula: string) => {
 
         const response = await fetch("/api/Encuestas/alumnoEncuestaFaltante", {
@@ -17,9 +17,8 @@ function Student() {
             body: JSON.stringify({ matricula: matricula })
         }).then(e => e.json())
         console.log(response)
-        console.log("hello world")
 
-        setEncuestasFaltantes(response)
+        setEncuestasFaltantes(response.Encuestas ? response.Encuestas : undefined)
 
     }
     useEffect(() => {

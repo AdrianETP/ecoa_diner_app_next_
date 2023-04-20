@@ -16,7 +16,19 @@ export default async function handler(
     try {
         const { matricula } = req.body
         const pool: Pool = createPool(config)
-        const [query]: any = await pool.query("select * from EncuestasAlumnos where Matricula = ? and Contestada=0", [matricula])
+        const currentDate: Date = new Date()
+
+        const prompt = `
+         select * from EncuestasAlumnos 
+         inner join Encuesta 
+         on EncuestasAlumnos.ClaveEncuesta = Encuesta.ClaveEncuesta
+         where 
+         Matricula = ? and
+         FechaIni <= ? and
+         FechaLim > ?
+             `
+
+        const [query]: any = await pool.query(prompt, [matricula, currentDate, currentDate])
         if (query[0]) {
             const encuestas = query;
             const response: Response = {
