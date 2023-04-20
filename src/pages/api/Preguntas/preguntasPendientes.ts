@@ -38,7 +38,7 @@ export default async function handler(
         peg.ClaveMateria = ?
         and 
         ra.ClaveRespuesta is null;
-             `
+        `
 
         const [query]: any = await pool.query(prompt, [Matricula, ClaveEncuesta, Nomina, ClaveMateria])
         if (query[0]) {

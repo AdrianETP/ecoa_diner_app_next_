@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'jreactj'
 
 interface Props {
     nombre: string
@@ -6,7 +6,7 @@ interface Props {
 
 function Navbar(props: Props) {
     const CerrarSession = () => {
-        if (typeof window != "undefined") {
+        if (typeof window!= "undefined") {
             window.sessionStorage.removeItem("user")
             location.href = "/"
         }

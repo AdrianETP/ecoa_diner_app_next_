@@ -20,14 +20,14 @@ function UnityGame() {
             if (JSON.stringify(sessionUserJson) == JSON.stringify(paramsUserJson) && "Matricula" in paramsUserJson) {
                 setUser(paramsUserJson)
                 console.log(paramsUserJson)
-            
-            }else{
-                    location.href = "/"
-                }
-        }
-        else{
+
+            } else {
                 location.href = "/"
             }
+        }
+        else {
+            location.href = "/"
+        }
         return () => {
             document.body.removeChild(script);
         };
@@ -39,7 +39,7 @@ function UnityGame() {
             <div className="bg-gray-500 flex h-[95vh] overflow-hidden items-center justify-center">
                 <iframe className='m-0'
                     title="Unity Game"
-                    src={"/WEBgame/index.html?matricula=" + JSON.stringify(user)}
+                    src={"/WEBgame/index.html?user=" + JSON.stringify(user)}
                     width="100%"
                     height="650"
                 />
