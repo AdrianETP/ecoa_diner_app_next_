@@ -20,15 +20,11 @@ export default async function handler(
 
         const prompt = `
          select * from EncuestasAlumnos 
-         inner join Encuesta 
-         on EncuestasAlumnos.ClaveEncuesta = Encuesta.ClaveEncuesta
          where 
-         Matricula = ? and
-         FechaIni <= ? and
-         FechaLim > ?
+         Matricula = ?
              `
 
-        const [query]: any = await pool.query(prompt, [matricula, currentDate, currentDate])
+        const [query]: any = await pool.query(prompt, [matricula])
         if (query[0]) {
             const encuestas = query;
             const response: Response = {

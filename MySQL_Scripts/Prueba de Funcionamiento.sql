@@ -24,7 +24,7 @@ SELECT * FROM Grupo;
 #TRUNCATE Profesor;
 
 
-INSERT INTO Profesor VALUES("A00789123", "Profe2","Prueba2", "Prueba2", "12345", "profe2@gmail.com"),("A00123456", "Profe1","Prueba1", "Prueba1", "12345", "profe1@gmail.com");
+INSERT INTO Profesor VALUES("A00789123", "Jose","Martinez", "Vazques", "12345", "profe2@gmail.com"),("A00123456", "Profe1","Prueba1", "Prueba1", "12345", "profe1@gmail.com");
 SELECT * FROM Profesor;
 
 # Datos Alumno
@@ -33,7 +33,7 @@ SELECT * FROM Profesor;
 #TRUNCATE Alumno;
 
 INSERT INTO Alumno VALUES("A00456789","Nombre1","Apellido1","Apellido2","Contraseña1","alumno1@gmail.com"),
-("A00223456","Nombre2","Apellido3","Apellido4","Contraseña2","alumno2@gmail.com");
+("A00223456","Nombre2","Apellido3","Apellido4","Contraseña2","alumno2@gmail.com"),("A01198211","Adrian Eduardo","Treviño","Peña","Adrian-005834","A01198211@tec.mx");
 SELECT * FROM Alumno;
 
 # Datos Premio
@@ -59,10 +59,10 @@ SELECT * FROM Pregunta;
 #TRUNCATE Encuesta;
 
 INSERT INTO Encuesta VALUES
-("E1","404","EJ23","Ecoa 1", current_date(), current_date()),
-("E2","101","EJ23","Ecoa 1", current_date(), current_date()),
-("E3","404","AD22","Ecoa 1", current_date(), current_date()),
-("E4","101","AD22","Ecoa 1", current_date(), current_date());
+("E1","404","EJ23","Ecoa 1", current_date(), Date_add(current_date(),interval 1 month)),
+("E2","101","EJ23","Ecoa 1", current_date(), Date_add(current_date(),interval 1 month)),
+("E3","404","AD22","Ecoa 1", current_date(), Date_add(current_date(),interval 1 month)),
+("E4","101","AD22","Ecoa 1", current_date(), Date_add(current_date(),Interval 1 month));
 SELECT * FROM Encuesta;
 
 # Datos AlumnosEnGrupo
@@ -72,6 +72,7 @@ SELECT * FROM Encuesta;
 INSERT INTO AlumnoEnGrupo VALUES 
 ("404","A00456789","TC1005B","EJ23"),
 ("404","A00223456","TC1001B","EJ23"),
+("404","A01198211","TC1001B","EJ23"),
 ("101","A00456789","TC1005B","AD22"),
 ("101","A00223456","TC1001B","AD22");
 SELECT * FROM alumnoengrupo;
@@ -94,8 +95,8 @@ SELECT * FROM profesorengrupo;
 
 # Datos EncuestasPreguntas
 
-DROP TABLE encuestaspreguntas;
-TRUNCATE encuestaspreguntas;
+# DROP TABLE encuestaspreguntas;
+# TRUNCATE encuestaspreguntas;
 
 
 # Creacion de Encuestas con Preguntas
@@ -112,16 +113,10 @@ ORDER BY e.claveEncuesta, p.clavePregunta;
 
 # Datos EncuestasAlumnos
 
-DROP TABLE encuestasalumnos;
-TRUNCATE encuestasalumnos;
+# DROP TABLE encuestasalumnos;
+# TRUNCATE encuestasalumnos;
 
 
-# Selecciona a alumnos que cursaron un curso en AlumnosEnGrupo
-INSERT INTO EncuestasAlumnos(ClaveEncuesta,Matricula,Contestada)
-SELECT e.claveEncuesta, aeg.Matricula, 0
-FROM Encuesta e
-INNER JOIN Grupo g ON e.CRN = g.CRN
-INNER JOIN AlumnoEnGrupo aeg ON g.CRN = aeg.CRN AND g.ClaveMateria = aeg.ClaveMateria;
 
 # Selecciona a alumnos que cursaron un curso en AlumnosEnGrupo en un periodo especifico
 INSERT INTO EncuestasAlumnos(ClaveEncuesta,Matricula,Contestada)
@@ -162,4 +157,10 @@ SELECT ra.ClavePregunta,
        ra.Comentario
 FROM RespuestasAlumnos ra;
 
+# Selecciona a alumnos que cursaron un curso en AlumnosEnGrupo
+INSERT INTO EncuestasAlumnos(ClaveEncuesta,Matricula,Contestada)
+SELECT e.claveEncuesta, aeg.Matricula, 0
+FROM Encuesta e
+INNER JOIN Grupo g ON e.CRN = g.CRN
+INNER JOIN AlumnoEnGrupo aeg ON g.CRN = aeg.CRN AND g.ClaveMateria = aeg.ClaveMateria;
 SELECT * FROM RespuestasFolios;

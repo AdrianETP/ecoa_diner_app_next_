@@ -1,4 +1,5 @@
 drop Table RespuestasFolios;
+drop Table RespuestasAlumnos;
 drop Table EncuestasPreguntas;
 drop Table EncuestasAlumnos;
 drop Table alumnoengrupo;
@@ -11,5 +12,6 @@ drop Table Premio;
 drop Table Grupo;
 drop Table UDF;
 
+drop table Colaborador;
 
 
