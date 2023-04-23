@@ -63,3 +63,15 @@ export interface Grupo {
     ClaveEA: string,
     ClaveCampus: string,
 }
+
+export interface Respuesta {
+    ClaveEncuesta: string,
+    CRN: string,
+    Matricula: string,
+    ClavePregunta: string,
+    TipoPregunta: string,
+    Nomina: string,
+    TipoRespuesta: string,
+    Evaluacion: number,
+    Comentario: string,
+}
