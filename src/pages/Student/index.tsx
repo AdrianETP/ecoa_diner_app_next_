@@ -16,7 +16,6 @@ function Student() {
             },
             body: JSON.stringify({ matricula: matricula })
         }).then(e => e.json())
-        console.log(response)
 
         setEncuestasFaltantes(response.Encuestas ? response.Encuestas : undefined)
 

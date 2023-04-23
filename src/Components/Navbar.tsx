@@ -1,4 +1,4 @@
-import React from 'jreactj'
+import React from 'react'
 
 interface Props {
     nombre: string
