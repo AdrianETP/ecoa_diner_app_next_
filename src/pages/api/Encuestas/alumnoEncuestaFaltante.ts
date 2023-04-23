@@ -18,13 +18,10 @@ export default async function handler(
         const pool: Pool = createPool(config)
         const currentDate: Date = new Date()
 
-        const prompt = `
-         select * from EncuestasAlumnos 
-         where 
-         Matricula = ?
-             `
+        const prompt = `select * from EncuestasAlumnos join Encuesta on EncuestasAlumnos.ClaveEncuesta = Encuesta.ClaveEncuesta  where EncuestasAlumnos.Matricula = ? and Contestada = 0 and FechaIni <= ? and FechaLim > ?;`
 
-        const [query]: any = await pool.query(prompt, [matricula])
+        const [query]: any = await pool.query(prompt, [matricula, currentDate, currentDate])
+        console.log(query)
         if (query[0]) {
             const encuestas = query;
             const response: Response = {
@@ -39,7 +36,7 @@ export default async function handler(
 
     }
     catch (err: any) {
-        res.status(400).send(err)
+        res.status(400).send(err.message)
     }
 
 
