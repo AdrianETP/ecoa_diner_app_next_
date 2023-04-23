@@ -1,18 +1,30 @@
 import Navbar from "@/Components/Navbar"
 import { Colaborador, Encuesta, Pregunta } from "@/types"
-import { useState, useEffect } from "react"
-import { AddModal, ModifyModal } from '../../Components/Modals'
+import { useState, useEffect, ReactComponentElement, ReactFragment, ReactNode } from "react"
+import { QuestionAddModal, QuestionDeleteModal, QuestionModifyModal, QuestionRetrieveModal } from "@/Components/QuestionModals"
+import { EcoaAddModal } from "@/Components/EcoaModals"
 
 export default function Admin() {
     const [user, setUser] = useState<Colaborador | undefined>(undefined)
-    const [preguntas, setPreguntas] = useState<[Pregunta] | undefined>()
+    const [preguntasActivas, setPreguntasActivas] = useState<[Pregunta] | undefined>()
+    const [preguntasArchivadas, setPreguntasArchivadas] = useState<[Pregunta] | undefined>()
     const [encuestas, setEncuestas] = useState<[Encuesta] | undefined>()
-    const [modal, setModal] = useState(AddModal)
+    const [modal, setModal] = useState<ReactNode | undefined>(undefined)
 
     const getAllPreguntas = async () => {
         const preguntasJson = await fetch("/api/Preguntas").then((res) => res.json())
-        console.log(preguntasJson)
-        setPreguntas(preguntasJson.Preguntas)
+        let preguntasActivasArray: [Pregunta] | undefined = undefined
+        let preguntasArchivadasArray: [Pregunta] | undefined = undefined
+        for (const pregunta of preguntasJson.Preguntas) {
+            if (pregunta.Archivado == null || pregunta.Archivado == "0") {
+                preguntasActivasArray ? preguntasActivasArray.push(pregunta as Pregunta) : preguntasActivasArray = [pregunta as Pregunta]
+            }
+            else {
+                preguntasArchivadasArray ? preguntasArchivadasArray.push(pregunta as Pregunta) : preguntasArchivadasArray = [pregunta as Pregunta]
+            }
+        }
+        setPreguntasActivas(preguntasActivasArray)
+        setPreguntasArchivadas(preguntasArchivadasArray)
     }
 
     const getAllEncuestas = async () => {
@@ -52,9 +64,9 @@ export default function Admin() {
                             <input type="checkbox" id="my-modal" className="modal-toggle" />
                             <div className="modal h-screen">
                                 <div className="modal-box h-screen">
-                                    {modal}
+                                    {modal ? modal : ""}
                                     <div className=" absolute top-1 right-1">
-                                        <label htmlFor="my-modal" className="p-4 w-4 h-4 bg-red-100 flex justify-center items-center rounded-full">X</label>
+                                        <label htmlFor="my-modal" onClick={() => setModal(undefined)} className="p-4 w-4 h-4 bg-red-100 flex justify-center items-center rounded-full">X</label>
                                     </div>
                                 </div>
                             </div>
@@ -62,15 +74,15 @@ export default function Admin() {
                                 <h1 className="text-3xl text-center my-3">Preguntas Activas</h1>
                                 <div className="w-5/6 overflow-y-auto rounded-md">
                                     <div className="bg-white p-2  flex justify-between font-bold text-slate-900">
-                                        <div className="w-1/4">Index</div>
+                                        <div className="w-1/4">Numero Pregunta</div>
                                         <div className="w-1/4">Clave Pregunta</div>
                                         <div className="w-1/4">Tipo De Pregunta</div>
                                         <div className="w-1/4">Descripcion</div>
                                     </div>
                                     <div className="overflow-scroll h-96">
-                                        {preguntas?.map((pregunta: Pregunta, index) => (
+                                        {preguntasActivas?.map((pregunta: Pregunta, index) => (
                                             <div key={pregunta.ClavePregunta} className={index % 2 == 0 ? "bg-slate-300 flex justify-between" : "bg-slate-100 flex justify-between"}>
-                                                <div className="w-1/4 pl-2">{index + 1}</div>
+                                                <div className="w-1/4 pl-2">{pregunta.NumPregunta}</div>
                                                 <div className="w-1/4 pl-2">{pregunta.ClavePregunta}</div>
                                                 <div className="w-1/4 pl-2">{pregunta.TipoPregunta}</div>
                                                 <div className="w-1/4 pl-2"><div className="break-words">{pregunta.Descripcion}</div></div>
@@ -79,51 +91,49 @@ export default function Admin() {
                                     </div>
                                 </div>
                                 <div className="flex mt-3 w-full justify-evenly">
-                                    <label onClick={() => setModal(AddModal)} htmlFor="my-modal" className="btn btn-success">Agregar Pregunta</label>
-                                    <label onClick={() => setModal(<ModifyModal preguntas={preguntas?preguntas:undefined}></ModifyModal>)} htmlFor="my-modal" className="btn btn-warning">Modificar Pregunta</label>
-                                    <label htmlFor="my-modal" className="btn btn-error">Archivar Pregunta</label>
-                                    <label htmlFor="my-modal" className="btn btn-info">Recuperar Pregunta</label>
+                                    <label onClick={() => setModal(<QuestionAddModal getAllPreguntas={getAllPreguntas} preguntasArchivadas={preguntasArchivadas} preguntasActivas={preguntasActivas} />)} htmlFor="my-modal" className="btn btn-success">Agregar Pregunta</label>
+                                    <label onClick={() => setModal(<QuestionModifyModal getAllPreguntas={getAllPreguntas} preguntasActivas={preguntasActivas} preguntasArchivadas={preguntasArchivadas} />)} htmlFor="my-modal" className="btn btn-warning">Modificar Pregunta</label>
+                                    <label onClick={() => setModal(<QuestionDeleteModal getAllPreguntas={getAllPreguntas} preguntasActivas={preguntasActivas} preguntasArchivadas={preguntasArchivadas} />)} htmlFor="my-modal" className="btn btn-error">Archivar Pregunta</label>
+                                    <label onClick={() => setModal(<QuestionRetrieveModal getAllPreguntas={getAllPreguntas} preguntasActivas={preguntasActivas} preguntasArchivadas={preguntasArchivadas} />)} htmlFor="my-modal" className="btn btn-info">Recuperar Pregunta</label>
                                 </div>
                             </div>
 
                             <div className="  w-full flex flex-col items-center">
                                 <h1 className="text-3xl text-center my-3">Encuestas Activas</h1>
-                                <table className="table w-5/6">
-                                    <thead>
-                                        <tr>
-                                            <th>ClaveEncuesta</th>
-                                            <th>CRN</th>
-                                            <th>Periodo</th>
-                                            <th>Descripcion</th>
-                                            <th>Fecha Inicial</th>
-                                            <th>Fecha Limite</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="overflow-y-auto overflow-x-auto h-2/5">
-                                        {encuestas?.map((encuesta: Encuesta) => (
-                                            <tr key={encuesta.ClaveEncuesta}>
-                                                <td>{encuesta.ClaveEncuesta}</td>
-                                                <td>{encuesta.CRN}</td>
-                                                <td>{encuesta.Periodo}</td>
-                                                <td className="overflow-x-hidden">{encuesta.Descripcion}</td>
-                                                <td>{encuesta.FechaIni.toString().substring(0, 10)}</td>
-                                                <td>{encuesta.FechaLim.toString().substring(0, 10)}</td>
-                                            </tr>
+
+                                <div className="w-5/6 overflow-y-auto rounded-md">
+                                    <div className="bg-white p-2  flex justify-between font-bold text-slate-900">
+                                        <div className="w-1/5">Numero Encuesta</div>
+                                        <div className="w-1/5">Clave EA</div>
+                                        <div className="w-1/5">FechaIni</div>
+                                        <div className="w-1/5">FechaLim</div>
+                                        <div className="w-1/5">Descripcion</div>
+                                    </div>
+                                    <div className="overflow-scroll max-h-96">
+                                        {encuestas?.map((encuesta: Encuesta, index) => (
+                                            <div key={encuesta.ClaveEncuesta} className={index % 2 == 0 ? "bg-slate-300 flex justify-between min-h-10" : "bg-slate-100 flex justify-between min-h-10"}>
+                                                <div className="w-1/5 pl-2">{encuesta.ClaveEncuesta}</div>
+                                                <div className="w-1/5 pl-2">{encuesta.ClaveEA}</div>
+                                                <div className="w-1/5 pl-2">{encuesta.FechaIni.toString().substring(0, 10)}</div>
+                                                <div className="w-1/5 pl-2">{encuesta.FechaLim.toString().substring(0, 10)}</div>
+                                                <div className="break-words w-1/5 pl-2">{encuesta.Descripcion}</div>
+                                            </div>
                                         ))}
-                                    </tbody>
-                                </table>
+                                    </div>
+                                </div>
                                 <div className="flex mt-3 w-full justify-evenly">
-                                    <button className="btn btn-success">Agregar Encuesta</button>
-                                    <button className="btn btn-warning">Modificar Encuesta</button>
-                                    <button className="btn btn-error">Borrar Encuesta </button>
-                                    <button className="btn btn-info">Activar Encuesta</button>
+                                    <label htmlFor="my-modal" className="btn btn-success" onClick={() => setModal(<EcoaAddModal encuestas={encuestas} getAllPreguntas={getAllPreguntas} />)}>Agregar Encuesta</label>
+                                    <label htmlFor="my-modal" className="btn btn-warning">Modificar Encuesta</label>
+                                    <label htmlFor="my-modal" className="btn btn-error">Borrar Encuesta </label>
+                                    <label htmlFor="my-modal" className="btn btn-info">Activar Encuesta</label>
                                 </div>
                             </div>
                         </div>
                     </>
 
-                ) : (<div className='w-screen h-screen flex justify-center items-center text-3xl'><h1>Loading...</h1></div>)}
-        </div>
+                ) : (<div className='w-screen h-screen flex justify-center items-center text-3xl'><h1>Loading...</h1></div>)
+            }
+        </div >
     )
 }
 

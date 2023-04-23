@@ -36,8 +36,7 @@ export interface EncuestaAlumno {
 
 export interface Encuesta {
   ClaveEncuesta: string,
-  CRN: string,
-  Periodo: string,
+  ClaveEA: string,
   Descripcion: string,
   FechaIni: Date,
   FechaLim: Date,
@@ -51,5 +50,6 @@ export interface Pregunta {
   ClavePregunta: string,
   TipoPregunta: string,
   Descripcion: string,
-  Archivado: number,
+  Archivado: number | null,
+  NumPregunta: string,
 }

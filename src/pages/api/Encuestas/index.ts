@@ -16,7 +16,6 @@ export default async function handler(
     try {
         const pool = createPool(config);
         const prompt = 'select * from Encuesta'
-        pool.end()
         const [query]: any = await pool.query(prompt)
         pool.end()
         if (query.length > 0) {
@@ -29,7 +28,7 @@ export default async function handler(
         }
     }
     catch (err: any) {
-        res.status(400).send({ Msg: "Error: error al extraer las encuestas", Encuestas: undefined })
+        res.status(400).send({ Msg: err.message, Encuestas: undefined })
     }
 
 

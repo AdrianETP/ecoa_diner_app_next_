@@ -18,7 +18,7 @@ export default async function handler(
         const pool: Pool = createPool(config)
 
         const prompt = `
-        Select * from Pregunta where Archivado is NULL;
+        Select * from Pregunta order by NumPregunta , ClavePregunta;
         `
 
         const [query]: any = await pool.query(prompt)
