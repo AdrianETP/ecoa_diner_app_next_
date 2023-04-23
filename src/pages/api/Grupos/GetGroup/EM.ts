@@ -17,7 +17,7 @@ export default async function handler(
         const ClaveEncuesta = req.body.ClaveEncuesta
         const Matricula = req.body.Matricula
         const pool: Pool = createPool(config)
-        let [rows]: any = await pool.query("select Grupo.CRN,Grupo.ClaveMateria,Grupo.ClaveEA,Grupo.ClaveCampus from EncuestasAlumnos inner join EncuestaGrupo on EncuestasAlumnos.ClaveEncuesta = EncuestaGrupo.ClaveEncuesta inner join Grupo on EncuestaGrupo.CRN = Grupo.CRN where Matricula = ? and EncuestasAlumnos.ClaveEncuesta = ?   ", [Matricula, ClaveEncuesta])
+        let [rows]: any = await pool.query("select Grupo.CRN,Grupo.ClaveMateria,Grupo.ClaveEA,Grupo.ClaveCampus from EncuestasAlumnos inner join EncuestaGrupo on EncuestasAlumnos.ClaveEncuesta = EncuestaGrupo.ClaveEncuesta inner join Grupo on EncuestaGrupo.CRN = Grupo.CRN where Matricula = ? and EncuestasAlumnos.ClaveEncuesta = ? and Contestada = 0   ", [Matricula, ClaveEncuesta])
         pool.end()
         console.log(rows)
         res.status(200).send({ Msg: "Success", Grupos: rows as Grupo[] })

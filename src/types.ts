@@ -17,6 +17,9 @@ export interface Profesor {
     Nombre: string,
     ApellidoPaterno: string,
     ApellidoMaterno: string,
+    ClaveCampus: string,
+    Departamento: string
+    Clave: string
 }
 
 export interface Colaborador {
