@@ -2,7 +2,7 @@ import Navbar from "@/Components/Navbar"
 import { Colaborador, Encuesta, Pregunta } from "@/types"
 import { useState, useEffect, ReactComponentElement, ReactFragment, ReactNode } from "react"
 import { QuestionAddModal, QuestionDeleteModal, QuestionModifyModal, QuestionRetrieveModal } from "@/Components/QuestionModals"
-import { EcoaAddModal } from "@/Components/EcoaModals"
+import { EcoaAddModal, EcoaArchiveModal } from "@/Components/EcoaModals"
 
 export default function Admin() {
     const [user, setUser] = useState<Colaborador | undefined>(undefined)
@@ -29,7 +29,6 @@ export default function Admin() {
 
     const getAllEncuestas = async () => {
         const encuestasJson = await fetch("/api/Encuestas").then((res) => res.json())
-        console.log(encuestasJson)
         setEncuestas(encuestasJson.Encuestas)
     }
     useEffect(() => {
@@ -103,28 +102,30 @@ export default function Admin() {
 
                                 <div className="w-5/6 overflow-y-auto rounded-md">
                                     <div className="bg-white p-2  flex justify-between font-bold text-slate-900">
-                                        <div className="w-1/5">Numero Encuesta</div>
-                                        <div className="w-1/5">Clave EA</div>
-                                        <div className="w-1/5">FechaIni</div>
-                                        <div className="w-1/5">FechaLim</div>
-                                        <div className="w-1/5">Descripcion</div>
+                                        <div className="w-1/6">Numero Encuesta</div>
+                                        <div className="w-1/6">Clave EA</div>
+                                        <div className="w-1/6">FechaIni</div>
+                                        <div className="w-1/6">FechaLim</div>
+                                        <div className="w-1/6">Descripcion</div>
+                                        <div className="w-1/6">Archivado</div>
                                     </div>
                                     <div className="overflow-scroll max-h-96">
                                         {encuestas?.map((encuesta: Encuesta, index) => (
                                             <div key={encuesta.ClaveEncuesta} className={index % 2 == 0 ? "bg-slate-300 flex justify-between min-h-10" : "bg-slate-100 flex justify-between min-h-10"}>
-                                                <div className="w-1/5 pl-2">{encuesta.ClaveEncuesta}</div>
-                                                <div className="w-1/5 pl-2">{encuesta.ClaveEA}</div>
-                                                <div className="w-1/5 pl-2">{encuesta.FechaIni.toString().substring(0, 10)}</div>
-                                                <div className="w-1/5 pl-2">{encuesta.FechaLim.toString().substring(0, 10)}</div>
-                                                <div className="break-words w-1/5 pl-2">{encuesta.Descripcion}</div>
+                                                <div className="w-1/6 pl-2">{encuesta.ClaveEncuesta}</div>
+                                                <div className="w-1/6 pl-2">{encuesta.ClaveEA}</div>
+                                                <div className="w-1/6 pl-2">{encuesta.FechaIni.toString().substring(0, 10)}</div>
+                                                <div className="w-1/6 pl-2">{encuesta.FechaLim.toString().substring(0, 10)}</div>
+                                                <div className="break-words w-1/6 pl-2">{encuesta.Descripcion}</div>
+                                                <div className="break-words w-1/6 pl-2">{encuesta.Archivado}</div>
                                             </div>
                                         ))}
                                     </div>
                                 </div>
                                 <div className="flex mt-3 w-full justify-evenly">
-                                    <label htmlFor="my-modal" className="btn btn-success" onClick={() => setModal(<EcoaAddModal encuestas={encuestas} getAllPreguntas={getAllPreguntas} />)}>Agregar Encuesta</label>
+                                    <label htmlFor="my-modal" className="btn btn-success" onClick={() => setModal(<EcoaAddModal encuestas={encuestas} getAllEncuestas={getAllEncuestas} />)}>Agregar Encuesta</label>
                                     <label htmlFor="my-modal" className="btn btn-warning">Modificar Encuesta</label>
-                                    <label htmlFor="my-modal" className="btn btn-error">Borrar Encuesta </label>
+                                    <label htmlFor="my-modal" className="btn btn-error" onClick={() => setModal(<EcoaArchiveModal encuestas={encuestas} getAllEncuestas={getAllEncuestas} />)}>Archivar Encuesta </label>
                                     <label htmlFor="my-modal" className="btn btn-info">Activar Encuesta</label>
                                 </div>
                             </div>

@@ -6,7 +6,7 @@ import { config } from '../conectionData'
 
 interface Response {
     Msg: string,
-    Encuestas: [EncuestaAlumno] | undefined
+    Encuestas: EncuestaAlumno[] | undefined
 }
 
 export default async function handler(
@@ -16,7 +16,6 @@ export default async function handler(
     try {
         const { matricula } = req.body
         const pool: Pool = createPool(config)
-        const currentDate: Date = new Date()
 
         const prompt = `
          select * from EncuestasAlumnos 
@@ -28,7 +27,7 @@ export default async function handler(
         if (query[0]) {
             const encuestas = query;
             const response: Response = {
-                Msg: "Se encontraron respuestas pendientes",
+                Msg: "Se encontraron Encuestas pendientes",
                 Encuestas: encuestas
             }
             res.send(response)
