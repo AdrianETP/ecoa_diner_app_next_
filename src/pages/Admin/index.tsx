@@ -122,9 +122,9 @@ export default function Admin() {
                                     </div>
                                 </div>
                                 <div className="flex mt-3 w-full justify-evenly">
-                                    <label htmlFor="my-modal" className="btn btn-success" onClick={() => setModal(<EcoaAddModal encuestas={encuestas} getAllPreguntas={getAllPreguntas} />)}>Agregar Encuesta</label>
+                                    <label htmlFor="my-modal" className="btn btn-success" onClick={() => setModal(<EcoaAddModal encuestas={encuestas} getAllEncuestas={getAllEncuestas} />)}>Agregar Encuesta</label>
                                     <label htmlFor="my-modal" className="btn btn-warning">Modificar Encuesta</label>
-                                    <label htmlFor="my-modal" className="btn btn-error">Borrar Encuesta </label>
+                                    <label htmlFor="my-modal" className="btn btn-error" onClick={()=> setModal(<EcoaDeleteModal encuestas={encuestas} getAllEncuestas={getAllEncuestas} />)}>Borrar Encuesta </label>
                                     <label htmlFor="my-modal" className="btn btn-info">Activar Encuesta</label>
                                 </div>
                             </div>

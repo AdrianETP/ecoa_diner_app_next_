@@ -3,7 +3,7 @@ import { useState } from "react"
 
 interface Props {
     encuestas: Encuesta[] | undefined
-    getAllPreguntas: () => void
+    getAllEncuestas: () => void
 }
 export function EcoaAddModal(props: Props) {
 
@@ -40,9 +40,9 @@ export function EcoaAddModal(props: Props) {
 
         }).then(res => res.json())
 
+        props.getAllEncuestas()
         if (response.status == "success") {
 
-            props.getAllPreguntas()
             setEncuesta({
                 ClaveEncuesta: "",
                 ClaveEA: "",
@@ -77,5 +77,9 @@ export function EcoaAddModal(props: Props) {
             </div>
         </div>
     )
+
+}
+
+export function EcoaDeleteModal() {
 
 }
