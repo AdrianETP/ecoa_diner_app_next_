@@ -12,7 +12,6 @@ export function EcoaAddModal(props: Props) {
     const [success, setSuccess] = useState<string>("")
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log(encuesta)
         const encuestaActiva = props.encuestas?.find(encuestaA => encuestaA.ClaveEncuesta == encuesta?.ClaveEncuesta)
         if (encuestaActiva) {
             setError("Error: ya hay una encuesta Activa con esa clave, puedes modificar la encuesta pero no puedes crear una encuesta con la misma clave")
@@ -59,11 +58,11 @@ export function EcoaAddModal(props: Props) {
             <h3 className="text-xl text-success text-center">{success}</h3>
             <div className="h-3/4 flex flex-col justify-evenly w-full">
                 <form className=" h-full flex flex-col justify-evenly w-full" onSubmit={e => { handleSubmit(e) }}>
-                    <input placeholder="Clave Encuesta" className="input input-bordered" onChange={e => setEncuesta(encuesta => ({ ...encuesta, ClaveEncuesta: e.target.value }))} />
-                    <input placeholder="Clave EA" className="input input-bordered" onChange={e => setEncuesta(encuesta => ({ ...encuesta, ClaveEA: e.target.value }))} />
-                    <input placeholder="Descripcion" className="input input-bordered" onChange={e => setEncuesta(pregunta => ({ ...pregunta, Descripcion: e.target.value }))} />
-                    <input placeholder="Fecha Inicial" className="input input-bordered" onChange={e => setEncuesta(pregunta => ({ ...pregunta, FechaIni: new Date(e.target.value) }))} />
-                    <input placeholder="Fecha Limite" className="input input-bordered" onChange={e => setEncuesta(pregunta => ({ ...pregunta, FechaLim: new Date(e.target.value) }))} />
+                    <input placeholder="Clave Encuesta" className="input input-bordered" onChange={e => setEncuesta(encuesta => encuesta ? ({ ...encuesta, ClaveEncuesta: e.target.value }) : ({ ClaveEncuesta: e.target.value } as Encuesta))} />
+                    <input placeholder="Clave EA" className="input input-bordered" onChange={e => setEncuesta(encuesta => encuesta ? ({ ...encuesta, ClaveEA: e.target.value }) : ({ ClaveEA: e.target.value } as Encuesta))} />
+                    <input placeholder="Descripcion" className="input input-bordered" onChange={e => setEncuesta(encuesta => encuesta ? ({ ...encuesta, Descripcion: e.target.value }) : ({ Descripcion: e.target.value } as Encuesta))} />
+                    <input placeholder="Fecha Inicial" type="date" className="input input-bordered" onChange={e => setEncuesta(encuesta => encuesta ? ({ ...encuesta, FechaIni: new Date(e.target.value) }) : { FechaIni: new Date(e.target.value) } as Encuesta)} />
+                    <input placeholder="Fecha Limite" type="date" className="input input-bordered" onChange={e => setEncuesta(encuesta => encuesta ? ({ ...encuesta, FechaLim: new Date(e.target.value) }) : ({ FechaLim: new Date(e.target.value) } as Encuesta))} />
                     <button className="btn btn-primary mt-5">Agregar</button>
                 </form>
             </div>

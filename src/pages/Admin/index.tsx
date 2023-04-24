@@ -1,6 +1,6 @@
 import Navbar from "@/Components/Navbar"
 import { Colaborador, Encuesta, Pregunta } from "@/types"
-import { useState, useEffect, ReactComponentElement, ReactFragment, ReactNode } from "react"
+import { useState, useEffect, ReactNode } from "react"
 import { QuestionAddModal, QuestionDeleteModal, QuestionModifyModal, QuestionRetrieveModal } from "@/Components/QuestionModals"
 import { EcoaAddModal, EcoaArchiveModal } from "@/Components/EcoaModals"
 
@@ -111,7 +111,7 @@ export default function Admin() {
                                     </div>
                                     <div className="overflow-scroll max-h-96">
                                         {encuestas?.map((encuesta: Encuesta, index) => (
-                                            <div key={encuesta.ClaveEncuesta} className={index % 2 == 0 ? "bg-slate-300 flex justify-between min-h-10" : "bg-slate-100 flex justify-between min-h-10"}>
+                                            <div key={encuesta.ClaveEncuesta} className={encuesta.Archivado == 1 ? "bg-slate-700 flex justify-between text-slate-100" : index % 2 == 0 ? "bg-slate-300 flex justify-between min-h-10" : "bg-slate-100 flex justify-between min-h-10"}>
                                                 <div className="w-1/6 pl-2">{encuesta.ClaveEncuesta}</div>
                                                 <div className="w-1/6 pl-2">{encuesta.ClaveEA}</div>
                                                 <div className="w-1/6 pl-2">{encuesta.FechaIni.toString().substring(0, 10)}</div>

@@ -15,7 +15,7 @@ export default async function handler(
 ) {
     try {
         const pool = createPool(config);
-        const prompt = 'select * from Encuesta'
+        const prompt = 'select * from Encuesta order by Archivado'
         const [query]: any = await pool.query(prompt)
         pool.end()
         if (query.length > 0) {
