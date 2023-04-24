@@ -43,6 +43,7 @@ export interface Encuesta {
     Descripcion: string,
     FechaIni: Date,
     FechaLim: Date,
+    Archivado: number
 }
 export interface PreguntaPendiente {
     ClavePregunta: string,
