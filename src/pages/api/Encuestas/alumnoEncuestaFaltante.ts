@@ -15,6 +15,7 @@ export default async function handler(
 ) {
     try {
         const { matricula } = req.body
+        const currentDate = new Date()
         const pool: Pool = createPool(config)
 
         const prompt = `select * from EncuestasAlumnos join Encuesta on EncuestasAlumnos.ClaveEncuesta = Encuesta.ClaveEncuesta  where EncuestasAlumnos.Matricula = ? and Contestada = 0 and FechaIni <= ? and FechaLim > ?;`
