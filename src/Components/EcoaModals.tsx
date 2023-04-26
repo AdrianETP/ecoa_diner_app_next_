@@ -30,6 +30,7 @@ export function EcoaAddModal(props: Props) {
 
         }).then(res => res.json())
 
+        props.getAllEncuestas()
         if (response.status == "success") {
 
             props.getAllEncuestas()
