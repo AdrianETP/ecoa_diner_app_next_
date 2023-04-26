@@ -139,6 +139,7 @@ export default function Admin() {
                                     <label htmlFor="my-modal" className="btn btn-warning" onClick={() => setModal(<EcoaEditModal encuestas={encuestas} getAllEncuestas={getAllEncuestas} />)}>Modificar Encuesta</label>
                                     <label htmlFor="my-modal" className="btn btn-error" onClick={() => setModal(<EcoaArchiveModal encuestas={encuestas} getAllEncuestas={getAllEncuestas} />)}>Archivar Encuesta </label>
                                     <label htmlFor="my-modal" className="btn btn-info" onClick={() => setModal(<EcoaRetrieveModal encuestas={encuestasArchivadas} getAllEncuestas={getAllEncuestas} />)}>Recuperar Encuesta</label>
+
                                 </div>
                             </div>
                         </div>
