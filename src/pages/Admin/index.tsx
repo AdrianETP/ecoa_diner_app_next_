@@ -1,5 +1,5 @@
 import Navbar from "@/Components/Navbar"
-import { Colaborador, Encuesta, Pregunta } from "@/types"
+import { Colaborador, Encuesta, Grupo, Pregunta } from "@/types"
 import { useState, useEffect, ReactNode } from "react"
 import { QuestionAddModal, QuestionDeleteModal, QuestionModifyModal, QuestionRetrieveModal } from "@/Components/QuestionModals"
 import { EcoaAddModal, EcoaArchiveModal, EcoaEditModal, EcoaRetrieveModal } from "@/Components/EcoaModals"
@@ -11,6 +11,17 @@ export default function Admin() {
     const [encuestas, setEncuestas] = useState<[Encuesta] | undefined>()
     const [encuestasArchivadas, setEncuestasArchivadas] = useState<[Encuesta] | undefined>()
     const [modal, setModal] = useState<ReactNode | undefined>(undefined)
+    const [grupos, setGrupos] = useState<Grupo[] | undefined>(undefined)
+
+    const getAllGrupos = async () => {
+        const gruposJson = await fetch("/api/Grupos").then((res) => res.json())
+        let gruposArray: Grupo[] | undefined = undefined
+        for (const grupo of gruposJson.Grupos) {
+            gruposArray ? gruposArray.push(grupo as Grupo) : gruposArray = [grupo as Grupo]
+        }
+        setGrupos(gruposArray ? gruposArray : undefined)
+        console.log(gruposArray)
+    }
 
     const getAllPreguntas = async () => {
         const preguntasJson = await fetch("/api/Preguntas").then((res) => res.json())
@@ -54,6 +65,7 @@ export default function Admin() {
                 setUser(paramsUserJson);
                 getAllPreguntas();
                 getAllEncuestas();
+                getAllGrupos();
 
             } else {
                 location.href = "/"
@@ -114,22 +126,20 @@ export default function Admin() {
 
                                 <div className="w-5/6 overflow-y-auto rounded-md">
                                     <div className="bg-white p-2  flex justify-between font-bold text-slate-900">
-                                        <div className="w-1/6">Numero Encuesta</div>
-                                        <div className="w-1/6">Clave EA</div>
-                                        <div className="w-1/6">FechaIni</div>
-                                        <div className="w-1/6">FechaLim</div>
-                                        <div className="w-1/6">Descripcion</div>
-                                        <div className="w-1/6">Archivado</div>
+                                        <div className="w-1/5">Numero Encuesta</div>
+                                        <div className="w-1/5">Clave EA</div>
+                                        <div className="w-1/5">FechaIni</div>
+                                        <div className="w-1/5">FechaLim</div>
+                                        <div className="w-1/5">Descripcion</div>
                                     </div>
                                     <div className="overflow-scroll max-h-96">
                                         {encuestas?.map((encuesta: Encuesta, index) => (
                                             <div key={encuesta.ClaveEncuesta} className={encuesta.Archivado == 1 ? "bg-slate-700 flex justify-between text-slate-100" : index % 2 == 0 ? "bg-slate-300 flex justify-between min-h-10" : "bg-slate-100 flex justify-between min-h-10"}>
-                                                <div className="w-1/6 pl-2">{encuesta.ClaveEncuesta}</div>
-                                                <div className="w-1/6 pl-2">{encuesta.ClaveEA}</div>
-                                                <div className="w-1/6 pl-2">{encuesta.FechaIni.toString().substring(0, 10)}</div>
-                                                <div className="w-1/6 pl-2">{encuesta.FechaLim.toString().substring(0, 10)}</div>
-                                                <div className="break-words w-1/6 pl-2">{encuesta.Descripcion}</div>
-                                                <div className="break-words w-1/6 pl-2">{encuesta.Archivado}</div>
+                                                <div className="w-1/5 pl-2">{encuesta.ClaveEncuesta}</div>
+                                                <div className="w-1/5 pl-2">{encuesta.ClaveEA}</div>
+                                                <div className="w-1/5 pl-2">{encuesta.FechaIni.toString().substring(0, 10)}</div>
+                                                <div className="w-1/5 pl-2">{encuesta.FechaLim.toString().substring(0, 10)}</div>
+                                                <div className="break-words w-1/5 pl-2">{encuesta.Descripcion}</div>
                                             </div>
                                         ))}
                                     </div>
