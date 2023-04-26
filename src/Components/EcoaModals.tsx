@@ -1,4 +1,4 @@
-import { Encuesta } from "@/types"
+import { Encuesta, Grupo } from "@/types"
 import { useState } from "react"
 
 interface Props {
@@ -266,3 +266,5 @@ export function EcoaRetrieveModal(props: Props) {
         </div>
     )
 }
+
+
