@@ -2,13 +2,14 @@ import Navbar from "@/Components/Navbar"
 import { Colaborador, Encuesta, Pregunta } from "@/types"
 import { useState, useEffect, ReactNode } from "react"
 import { QuestionAddModal, QuestionDeleteModal, QuestionModifyModal, QuestionRetrieveModal } from "@/Components/QuestionModals"
-import { EcoaAddModal, EcoaArchiveModal } from "@/Components/EcoaModals"
+import { EcoaAddModal, EcoaArchiveModal, EcoaEditModal, EcoaRetrieveModal } from "@/Components/EcoaModals"
 
 export default function Admin() {
     const [user, setUser] = useState<Colaborador | undefined>(undefined)
     const [preguntasActivas, setPreguntasActivas] = useState<[Pregunta] | undefined>()
     const [preguntasArchivadas, setPreguntasArchivadas] = useState<[Pregunta] | undefined>()
     const [encuestas, setEncuestas] = useState<[Encuesta] | undefined>()
+    const [encuestasArchivadas, setEncuestasArchivadas] = useState<[Encuesta] | undefined>()
     const [modal, setModal] = useState<ReactNode | undefined>(undefined)
 
     const getAllPreguntas = async () => {
@@ -29,7 +30,18 @@ export default function Admin() {
 
     const getAllEncuestas = async () => {
         const encuestasJson = await fetch("/api/Encuestas").then((res) => res.json())
-        setEncuestas(encuestasJson.Encuestas)
+        let encuestasArray: [Encuesta] | undefined = undefined
+        let encuestasArchivadasArray: [Encuesta] | undefined = undefined
+        for (const encuesta of encuestasJson.Encuestas) {
+            if (encuesta.Archivado == null || encuesta.Archivado == "0") {
+                encuestasArray ? encuestasArray.push(encuesta as Encuesta) : encuestasArray = [encuesta as Encuesta]
+            }
+            else {
+                encuestasArchivadasArray ? encuestasArchivadasArray.push(encuesta as Encuesta) : encuestasArchivadasArray = [encuesta as Encuesta]
+            }
+        }
+        setEncuestas(encuestasArray)
+        setEncuestasArchivadas(encuestasArchivadasArray)
     }
     useEffect(() => {
         const params = new URLSearchParams(location.search)
@@ -124,11 +136,10 @@ export default function Admin() {
                                 </div>
                                 <div className="flex mt-3 w-full justify-evenly">
                                     <label htmlFor="my-modal" className="btn btn-success" onClick={() => setModal(<EcoaAddModal encuestas={encuestas} getAllEncuestas={getAllEncuestas} />)}>Agregar Encuesta</label>
-                                    <label htmlFor="my-modal" className="btn btn-warning">Modificar Encuesta</label>
-
+                                    <label htmlFor="my-modal" className="btn btn-warning" onClick={() => setModal(<EcoaEditModal encuestas={encuestas} getAllEncuestas={getAllEncuestas} />)}>Modificar Encuesta</label>
                                     <label htmlFor="my-modal" className="btn btn-error" onClick={() => setModal(<EcoaArchiveModal encuestas={encuestas} getAllEncuestas={getAllEncuestas} />)}>Archivar Encuesta </label>
+                                    <label htmlFor="my-modal" className="btn btn-info" onClick={() => setModal(<EcoaRetrieveModal encuestas={encuestasArchivadas} getAllEncuestas={getAllEncuestas} />)}>Recuperar Encuesta</label>
 
-                                    <label htmlFor="my-modal" className="btn btn-info">Activar Encuesta</label>
                                 </div>
                             </div>
                         </div>

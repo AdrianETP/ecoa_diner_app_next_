@@ -21,6 +21,7 @@ export function QuestionAddModal(props: Props) {
     const [success, setSuccess] = useState<string>("")
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        console.log(pregunta)
         const preguntaActiva = props.preguntasActivas?.find(preguntaA => preguntaA.ClavePregunta == pregunta.ClavePregunta)
         const preguntaArchivada = props.preguntasArchivadas?.find(preguntaA => preguntaA.ClavePregunta == pregunta.ClavePregunta)
         if (preguntaActiva) {
@@ -80,11 +81,11 @@ export function QuestionAddModal(props: Props) {
                     Archivado: null,
                     NumPregunta: "",
                 })
-                setSuccess(result.message)
+                setSuccess(result.Msg)
 
             }
             else {
-                setError(result.message)
+                setError(result.Msg)
             }
         }
 
@@ -192,7 +193,6 @@ export function QuestionModifyModal(props: Props) {
                         <option disabled selected>Clave de la Pregunta</option>
                         {props.preguntasActivas?.map((pregunta: Pregunta) => (
                             <option key={pregunta.ClavePregunta}>{pregunta.ClavePregunta}</option>
-
                         ))}
                     </select>
                     <input placeholder="Tipo de Pregunta" className="input input-bordered" value={pregunta?.TipoPregunta} onChange={e => setPregunta(pregunta => (pregunta ? { ...pregunta, TipoPregunta: e.target.value } : undefined))} />
