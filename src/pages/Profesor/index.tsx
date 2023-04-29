@@ -5,22 +5,27 @@ import { useState, useEffect, } from "react"
 export default function Maestro() {
     const [user, setUser] = useState<Profesor | undefined>(undefined)
     const [data, setData] = useState<Calificaciones[] | undefined>(undefined)
-    const getData = async () => {
-        const response = await fetch("/api/Profesores/Calificaciones",
-            {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+    const getData = async (Nomina: string) => {
+        if (Nomina) {
+            const response = await fetch("/api/Profesores/Calificaciones",
+                {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
 
-                },
-                body: JSON.stringify({
-                    Nomina: user?.Nomina
-                })
-            }).then(res => res.json())
-        console.log(response)
-        setData(response.Calificaciones)
+                    },
+                    body: JSON.stringify({
+                        Nomina: Nomina
+                    })
+                }).then(res => res.json())
+            console.log(response)
+            setData(response.Calificaciones)
 
+        }
+        else {
+            console.log("No hay Nomina")
+        }
     }
 
     useEffect(() => {
@@ -33,6 +38,7 @@ export default function Maestro() {
             const sessionUserJson = JSON.parse(sessionUserString);
             if (JSON.stringify(paramsUserJson) == JSON.stringify(sessionUserJson)) {
                 setUser(paramsUserJson);
+                getData(paramsUserJson.Nomina)
 
             } else {
                 location.href = "/"
@@ -43,9 +49,6 @@ export default function Maestro() {
         }
     }, [])
 
-    useEffect(() => {
-        getData()
-    }, [user])
 
     const nombre: string = user?.Nombre + " " + user?.ApellidoPaterno + " " + user?.ApellidoMaterno
     return (
