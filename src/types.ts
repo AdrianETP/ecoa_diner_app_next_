@@ -19,7 +19,6 @@ export interface Profesor {
     ApellidoMaterno: string,
     ClaveCampus: string,
     Departamento: string
-    Clave: string
 }
 
 export interface Colaborador {
@@ -75,4 +74,25 @@ export interface Respuesta {
     TipoRespuesta: string,
     Evaluacion: number,
     Comentario: string,
+}
+
+export interface Calificaciones {
+    DOM_Prom: number,
+    RET_Prom: number,
+    REC_Prom: number,
+    ASE_Prom: number,
+    MET_Prom: number,
+    AlumnosCandidatos: number,
+    AlumnosQueOpinaron: number,
+    Campus: string,
+    ClaveMateria: string,
+    EjercicioAcademico: string,
+    NombreMateria: string,
+    Nomina: string,
+    Participacion: string,
+    Periodo: string,
+    Region: string,
+    Semanas: number,
+    Term: string,
+    TipodeUdF: string,
 }
