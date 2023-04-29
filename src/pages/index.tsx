@@ -15,14 +15,13 @@ export default function Home() {
             setUser(userJson)
         }
     }, [])
-    const ChangeUser = (newUser: Estudiante | Profesor | undefined) => {
+    const ChangeUser = (newUser: Estudiante | Profesor | Colaborador | undefined) => {
         setUser(newUser)
         if (typeof window != 'undefined') {
             if (!newUser) {
                 window.sessionStorage.removeItem("user")
             }
             else {
-
                 window.sessionStorage.setItem("user", JSON.stringify(newUser))
             }
         }
@@ -32,10 +31,7 @@ export default function Home() {
     }
     else {
         if ("Nomina" in user) {
-            return (<div>
-                <h1 className="bg-primary text-primary-content p-2 text-center text-xl"> hola {user.Nombre} , pagina de profesor</h1>
-                <button className="btn" onClick={() => ChangeUser(undefined)}>cerrar sesion</button>
-            </div>)
+            location.replace("/Profesor?user=" + JSON.stringify(user))
         }
         else if ("Matricula" in user) {
             location.replace("/Student?user=" + JSON.stringify(user))
