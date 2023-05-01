@@ -34,6 +34,8 @@ export interface Colaborador {
 export interface EncuestaAlumno {
     ClaveEncuesta: string,
     Matricula: string,
+    ClaveEA: string,
+    CRN: string,
     Contestada: number,
 }
 
