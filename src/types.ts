@@ -98,3 +98,9 @@ export interface Calificaciones {
     Term: string,
     TipodeUdF: string,
 }
+
+export interface UDF {
+    ClaveMateria: string,
+    NombreMateria: string,
+    TipoUDF: string,
+}

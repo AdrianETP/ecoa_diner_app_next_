@@ -18,7 +18,7 @@ export default async function handler(
         const currentDate = new Date()
         const pool: Pool = createPool(config)
 
-        const prompt = 'SELECT ea.Matricula,ea.CRN,ea.Contestada FROM EncuestasAlumnos ea JOIN Encuesta e ON ea.ClaveEncuesta = e.ClaveEncuesta WHERE ea.Matricula = ? AND e.Archivado = 0 AND ea.Contestada = 0;'
+        const prompt = 'SELECT ea.Matricula,ea.CRN,ea.Contestada, ea.ClaveEncuesta FROM EncuestasAlumnos ea JOIN Encuesta e ON ea.ClaveEncuesta = e.ClaveEncuesta WHERE ea.Matricula = ? AND e.Archivado = 0 AND ea.Contestada = 0;'
 
         const [query]: any = await pool.query(prompt, [matricula])
         console.log(query)

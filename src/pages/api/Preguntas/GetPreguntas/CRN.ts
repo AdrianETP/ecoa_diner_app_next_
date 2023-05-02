@@ -20,7 +20,7 @@ export default async function handler(
     try {
         const CRN = req.body.CRN
         const pool: Pool = createPool(config)
-        const query = `SELECT egp.ClavePregunta as ClavePregunta, p.Descripcion as Descripcion
+        const query = `SELECT egp.ClavePregunta as ClavePregunta, p.Descripcion as Descripcion, p.TipoPregunta
         FROM PreguntasProfesor pf 
         RIGHT JOIN EncuestaGrupoPregunta egp ON pf.ClavePregunta = egp.ClavePregunta 
         left Join Pregunta p ON egp.ClavePregunta = p.ClavePregunta
