@@ -19,6 +19,7 @@ export default async function handler(
         const prompt = `insert into Pregunta(ClavePregunta, TipoPregunta , Descripcion , Archivado , NumPregunta) values(? , ? , ? , ? , ? )`
 
         const [query]: any = await pool.query(prompt, [pregunta.ClavePregunta, pregunta.TipoPregunta, pregunta.Descripcion, pregunta.Archivado, pregunta.NumPregunta])
+
         pool.end()
         res.status(200).json({ status: "success", Msg: 'Pregunta agregada' })
     }
