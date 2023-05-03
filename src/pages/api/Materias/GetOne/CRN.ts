@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { createPool, Pool } from 'mysql2/promise'
 import { config } from './../../conectionData'
+import {Profesor} from '@/types'
 
 
 
