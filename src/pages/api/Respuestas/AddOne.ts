@@ -1,3 +1,4 @@
+
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { createPool, Pool } from 'mysql2/promise'
 import { config } from '../conectionData'
@@ -34,5 +35,3 @@ export default async function handler(
         console.log(respuesta)
     }
 }
-
-

@@ -8,7 +8,7 @@ import { config } from './../../conectionData'
 
 interface Response {
     Msg: string,
-    Materias: UDF | undefined
+    UDF: UDF[] | undefined
 }
 export default async function handler(
     req: NextApiRequest,
@@ -20,11 +20,11 @@ export default async function handler(
         let [rows]: any = await pool.query("Select UDF.ClaveMateria, UDF.NombreMateria, UDF.TipoUDF from UDF inner join Grupo on UDF.ClaveMateria=Grupo.ClaveMateria where Grupo.CRN=?", [Materia.CRN])
         pool.end()
         console.log(rows)
-        res.status(200).send({ Msg: "Success", Materias: rows as UDF })
+        res.status(200).send({ Msg: "Success", UDF: rows as UDF[] })
     }
     catch (err: any) {
         console.log(err)
-        res.status(400).send({ Msg: err.message, Materias: undefined })
+        res.status(400).send({ Msg: err.message, UDF: undefined })
     }
 
 

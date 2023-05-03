@@ -22,7 +22,7 @@ SELECT DISTINCT pp.Nomina
     FROM EncuestaGrupoPregunta egp
     JOIN AlumnoEnGrupo aeg
         ON egp.CRN = aeg.CRN
-        AND aeg.Matricula = matricula
+        AND aeg.Matricula = ?
     LEFT JOIN PreguntasProfesor pp
         ON egp.ClaveEncuesta = pp.ClaveEncuesta
         AND egp.CRN = pp.CRN
@@ -36,7 +36,7 @@ SELECT DISTINCT pp.Nomina
     WHERE ra.ClaveRespuesta IS NULL
     AND pp.CRN =?;
         `
-        let [rows]: any = await pool.query(query, [Matricula, CRN])
+        let [rows]: any = await pool.query(query, [Matricula, Matricula, CRN])
         pool.end()
         console.log(rows)
         res.status(200).send({ Msg: "Success", Profesores: rows as Profesor[] })
