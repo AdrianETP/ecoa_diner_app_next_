@@ -11,6 +11,8 @@ export interface Estudiante {
     ApellidoMaterno: string,
 }
 
+
+
 export interface Profesor {
     Nomina: string,
     Correo: string,
@@ -98,3 +100,11 @@ export interface Calificaciones {
     Term: string,
     TipodeUdF: string,
 }
+
+export interface UDF {
+    ClaveMateria: string,
+    NombreMateria: string,
+    TipoUDF: string,
+}
+
+
