@@ -37,6 +37,7 @@ export default async function handler(
             const pool: Pool = createPool(config)
             let UDFquery = "SELECT UDF.NombreMateria  FROM Grupo g JOIN UDF ON g.ClaveMateria = UDF.ClaveMateria WHERE g.CRN = ?;"
             const [query]: any = await pool.query(UDFquery, [EncuestaAlumno[i].CRN])
+            pool.end()
             console.log(query)
 
             Response.push({
