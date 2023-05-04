@@ -6,6 +6,7 @@ import { Encuesta } from '@/types'
 interface Response {
     status: "success" | "error",
     Msg: string,
+    UDF: string | undefined
 }
 
 export default async function handler(
@@ -19,7 +20,7 @@ export default async function handler(
 
         const prompt = `SELECT u.NombreMateria FROM UDF u JOIN Grupo g ON g.ClaveMateria = u.ClaveMateria WHERE g.CRN = ?;`
 
-        await pool.query(prompt, [encuesta.ClaveEncuesta, encuesta.ClaveEA, encuesta.Descripcion, encuesta.FechaIni.toString().substring(0, 10), encuesta.FechaLim.toString().substring(0, 10)])
+        const [query] =await pool.query(prompt, [encuesta.ClaveEncuesta, encuesta.ClaveEA, encuesta.Descripcion, encuesta.FechaIni.toString().substring(0, 10), encuesta.FechaLim.toString().substring(0, 10)])
         pool.end()
         res.status(200).json({ status: "success", Msg: 'Pregunta agregada' })
     }
