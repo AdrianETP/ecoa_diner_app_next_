@@ -105,6 +105,15 @@ export interface Calificaciones {
     TipodeUdF: string,
 }
 
+export interface SuperRespuesta {
+    CRN: string,
+    Materia: string,
+    ProfePregunta: {
+    Nomina: string,
+        Pregunta: Pregunta[]
+} []
+}
+
 
 
 
