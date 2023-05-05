@@ -1,0 +1,18 @@
+USE ecoa_diner;
+DROP TABLE IF EXISTS RespuestasFolios;    -- IMPORTANTE: Resultados finales
+DROP TABLE IF EXISTS RespuestasAlumnos;   -- IMPORTANTE: Resultados temporales
+DROP TABLE IF EXISTS PreguntasProfesor;
+DROP TABLE IF EXISTS EncuestasAlumnos;		-- Relaciones, no pasa nada si se borran
+DROP TABLE IF EXISTS EncuestasPreguntas;
+DROP TABLE IF EXISTS EncuestaGrupo;
+DROP TABLE IF EXISTS PremiosGanados;
+/*DROP TABLE IF EXISTS ProfesorEnGrupo;
+DROP TABLE IF EXISTS AlumnoEnGrupo;
+DROP TABLE IF EXISTS Encuesta;
+DROP TABLE IF EXISTS Pregunta;
+DROP TABLE IF EXISTS Premio;
+DROP TABLE IF EXISTS Alumno;		IMPORTANTE: NO CORRER, POR FAVOR
+DROP TABLE IF EXISTS Profesor;		ENTIDADES BASES CON MILES DE DATOS
+DROP TABLE IF EXISTS Grupo;
+DROP TABLE IF EXISTS UDF;
+DROP TABLE IF EXISTS Campus;*/ 
